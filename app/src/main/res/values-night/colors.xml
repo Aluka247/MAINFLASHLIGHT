@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background_color">#000</color>
+
+    <color name="text_color">#D6D6D6</color>
+    <color name="rp_color">#D6D6D6</color>
+    <color name="switch_color">#fff</color>
+    <color name="image2_color">#fff</color>
+    <color name="image1_color">#8B814C</color>
+    <color name="track_color">#2D2D2D</color>
+    <color name="toolBar_color">#000</color>
+    <color name="view_line_color">#1FFFFFFF</color>
+    <color name="help_color">#FFFFFF</color>
+
+</resources>
