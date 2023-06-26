@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -98,6 +100,10 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 vibrate(15); // Vibrate for 50 milliseconds
                 Toast.makeText(SettingsActivity.this,"Thank you",Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.stemmaflashlight.FlashLight");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+
             }
         });
 
@@ -107,6 +113,16 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 vibrate(15); // Vibrate for 50 milliseconds
                 Toast.makeText(SettingsActivity.this,"Thank you",Toast.LENGTH_SHORT).show();
+
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Hey, Download,Test, and share your testimony.\n" +
+                        "Don't forget to share to friends and family.\n" +
+                        "Remember, health is wealth. By using this FlashLight app, your vision is 100% secured " +
+                        "and you can use this app without glasses \uD83D\uDE0E: " +
+                        " https://play.google.com/store/apps/details?id=com.stemmaflashlight.FlashLight");
+                startActivity(shareIntent);
             }
         });
 
@@ -135,6 +151,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void clearCache(Context context) {
         // Get the cache directory
