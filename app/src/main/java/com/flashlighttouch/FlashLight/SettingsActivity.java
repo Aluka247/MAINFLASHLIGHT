@@ -1,4 +1,4 @@
-package com.stemmaflashlight.FlashLight;
+package com.flashlighttouch.FlashLight;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -100,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 vibrate(15); // Vibrate for 50 milliseconds
                 Toast.makeText(SettingsActivity.this,"Thank you",Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.stemmaflashlight.FlashLight");
+                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.flashlighttouch.FlashLight");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
 
@@ -121,7 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
                         "Don't forget to share to friends and family.\n" +
                         "Remember, health is wealth. By using this FlashLight app, your vision is 100% secured " +
                         "and you can use this app without glasses \uD83D\uDE0E: " +
-                        " https://play.google.com/store/apps/details?id=com.stemmaflashlight.FlashLight");
+                        " https://play.google.com/store/apps/details?id=com.flashlighttouch.FlashLight");
                 startActivity(shareIntent);
             }
         });

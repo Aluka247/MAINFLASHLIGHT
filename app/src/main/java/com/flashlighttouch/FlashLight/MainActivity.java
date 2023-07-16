@@ -1,22 +1,38 @@
-package com.stemmaflashlight.FlashLight;
+package com.flashlighttouch.FlashLight;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.slider.Slider;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.OnCompleteListener;
+import com.google.android.play.core.tasks.Task;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.Timer;
@@ -37,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private Slider strobeSlider;
 
     private Vibrator vibrator;
+
+    private ReviewManager reviewManager;
 
 
     @Override
@@ -92,11 +110,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-
         image1.setOnClickListener(clickListener);
         image2.setOnClickListener(clickListener);
-
-
 
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -123,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 
     private void toggleFlashlightWithStrobe(boolean state) {
@@ -190,5 +203,33 @@ public class MainActivity extends AppCompatActivity {
             toggleFlashlightWithStrobe(false);
         }
     }
-}
 
+    private void requestReview() {
+        reviewManager = ReviewManagerFactory.create(this);
+        Task<ReviewInfo> request = reviewManager.requestReviewFlow();
+        request.addOnCompleteListener(new OnCompleteListener<ReviewInfo>() {
+            @Override
+            public void onComplete(Task<ReviewInfo> task) {
+                if (task.isSuccessful()) {
+                    // We got the ReviewInfo object
+                    ReviewInfo reviewInfo = task.getResult();
+                    launchReviewFlow(reviewInfo);
+                } else {
+                    // There was an error
+                    // Handle the error gracefully or fallback to a different rating method
+                }
+            }
+        });
+    }
+
+    private void launchReviewFlow(ReviewInfo reviewInfo) {
+        Task<Void> flow = reviewManager.launchReviewFlow(this, reviewInfo);
+        flow.addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(Task<Void> task) {
+                // The review flow has finished (whether the user submitted a review or not)
+                // You can perform any necessary actions after the review flow here
+            }
+        });
+    }
+}

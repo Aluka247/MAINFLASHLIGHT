@@ -1,4 +1,4 @@
-package com.stemmaflashlight.FlashLight;
+package com.flashlighttouch.FlashLight;
 
 import org.junit.Test;
 
